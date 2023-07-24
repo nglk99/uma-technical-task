@@ -6,11 +6,11 @@
 
 
 To-Do:
-- [ ] Basic Grass
-- [ ] Normals
-- [ ] Wind
+- [x] Basic Grass
+- [x] Normals
+- [x] Wind
 - [ ] Procedural Tiling
-- [ ] Level of Detail Fade
+- [x] Level of Detail Fade
 - [ ] Edge Bevel
 
 ### How to Use:
