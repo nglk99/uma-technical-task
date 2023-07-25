@@ -1,7 +1,9 @@
 Shader "Custom/GrassShaderStandard"
+//Author: Angelika Vartanyan
 {
 	Properties
 	{
+		//Setting up parameters
 		[Header(Tint Colors)]
 		[Space]
 		[MainColor] _Color("Tint Color",Color) = (0.5 ,0.5 ,0.5,1.0)
@@ -59,7 +61,7 @@ Shader "Custom/GrassShaderStandard"
 				#pragma multi_compile_fog
 				#pragma multi_compile_fwdbase
 
-				#define SHADOWS_SCREEN
+				//#define SHADOWS_SCREEN
 				#include "AutoLight.cginc"
 				//#include "Lighting.cginc"
 				#include "UnityCG.cginc"
@@ -120,19 +122,18 @@ Shader "Custom/GrassShaderStandard"
 					SamplerState my_linear_repeat_sampler;
 					SamplerState my_linear_clamp_sampler;
 
+					//Stochastic sampling
 					float2 hash2D2D(float2 s)
 					{
-						//magic numbers
 						return frac(sin(s) * 4.5453);
 					}
-
-					//stochastic sampling
+					
 					float4 tex2DStochastic(sampler2D tex, float2 UV)
 					{
 						float4x3 BW_vx;
 						float2 skewUV = mul(float2x2 (1.0, 0.0, -0.57735027, 1.15470054), UV * 3.464);
 
-						//vertex IDs and barycentric coords
+						//Setting up vertex IDs and barycentric coords
 						float2 vxID = float2 (floor(skewUV));
 						float3 barry = float3 (frac(skewUV), 0);
 						barry.z = 1.0 - barry.x - barry.y;
@@ -141,7 +142,7 @@ Shader "Custom/GrassShaderStandard"
 							float4x3(float3(vxID, 0), float3(vxID + float2(0, 1), 0), float3(vxID + float2(1, 0), 0), barry.zyx) :
 							float4x3(float3(vxID + float2 (1, 1), 0), float3(vxID + float2 (1, 0), 0), float3(vxID + float2 (0, 1), 0), float3(-barry.z, 1.0 - barry.y, 1.0 - barry.x)));
 
-						//calculate derivatives to avoid triangular grid artifacts
+						//Calculate derivatives to avoid triangular grid artifacts
 						float2 dx = ddx(UV);
 						float2 dy = ddy(UV);
 
@@ -168,6 +169,7 @@ Shader "Custom/GrassShaderStandard"
 					#define UnityObjectToWorld(o) mul(unity_ObjectToWorld, float4(o.xyz,1.0))
 					[instance(1)]
 					[maxvertexcount(51)]
+					//Creating additional geometry
 					void geom(triangle v2g input[3], uint InstanceID : SV_GSInstanceID, inout TriangleStream<g2f> tristream)
 					{
 						g2f o;
@@ -192,10 +194,12 @@ Shader "Custom/GrassShaderStandard"
 						}
 						tristream.RestartStrip();
 
+						//LOD Distance calculation
+						//limits the geometry where it is not necessary
 						float dist = distance(_WorldSpaceCameraPos, UnityObjectToWorld((input[0].objPos / 3 + input[1].objPos / 3 + input[2].objPos / 3)));
 						if (dist > 0)
 						{
-							int NumStacks = lerp(_NumberOfStacks + 1, 0, (dist - _FadeDistanceStart) * (1 / max(_FadeDistanceEnd - _FadeDistanceStart, 0.0001)));//Clamp because people will start dividing by 0
+							int NumStacks = lerp(_NumberOfStacks + 1, 0, (dist - _FadeDistanceStart) * (1 / max(_FadeDistanceEnd - _FadeDistanceStart, 0.0001)));//Clamp 
 							_NumberOfStacks = min(clamp(NumStacks, clamp(_MinimumNumberStacks, 0, _NumberOfStacks), 17), _NumberOfStacks);
 						}
 
@@ -205,8 +209,10 @@ Shader "Custom/GrassShaderStandard"
 						float thicknessModifier = 1;
 
 						// Loop 3 times * numbersOfStacks for the grass
+						// Calculate shadows
 							for (float i = 1; i <= _NumberOfStacks; i++)
 							{
+								//Adding the custom offset to the normal
 								float4 offsetNormal = _OffsetVector * i * 0.01;
 								for (int ii = 0; ii < 3; ii++)
 								{
@@ -238,13 +244,11 @@ Shader "Custom/GrassShaderStandard"
 					float dist = 1;
 					float2 mainUV;
 					//Setup Coordinate Space
-
 					mainUV = i.uv;
 					float2 uv = i.worldPos.xz;
 					uv += 0.5;
 
-
-					//Creating the Wind Movement effect
+					//Creating the Wind Distortion
 					float bRipple = 1;
 
 					float2 dis = _Distortion.Sample(my_linear_repeat_sampler, mainUV * _TilingN3 + _Time.xx * 3 * _WindMovement);
@@ -255,18 +259,19 @@ Shader "Custom/GrassShaderStandard"
 					float ripples2 = 0;
 					float ripples3 = 0;
 
+					//Multi-texture tiling 
 					float3 normalDir = i.normal;
 					float3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
 					float3 grassPattern = tex2D(_GrassTex, mainUV * _TilingN1 + dis.xy);
 					float3 noise = _Noise.Sample(my_linear_repeat_sampler, mainUV * _TilingN2 + dis.xy) * _NoisePower;
 					half4 col = _MainTex.Sample(my_linear_repeat_sampler, mainUV + dis.xy * 0.09);
-					half alpha = step(1 - ((col.x + col.y + col.z + grassPattern.x) * _GrassThinness) * ((2 - i.color.r) * grassPattern.x) * saturate(ripples + 1) * saturate(ripples + 1), ((1 - i.color.r) * (ripples + 1)) * ( grassPattern.x) * _GrassThinness - dis.x * 5);
-					alpha = lerp(alpha, alpha + (grassPattern.x * (1 - i.color.r)) * _GrassThinnessIntersection, 1  * (ripples + 0.75));
-
+					
+					//Adding distortion
 					if (i.color.r >= 0.02)
 					{
 						if (alpha * (ripples3 + 1) - (i.color.r) < -0.02)discard;
 					}
+					//Color distortion
 					_Color *= 2;
 					col.xyz = (pow(col, _GrassSaturation) * _GrassSaturation) * float3(_Color.x, _Color.y, _Color.z);
 					col.xyz *= saturate(lerp(_SelfShadowColor, 1, pow(i.color.x, 1.1)) + ((ripples * 1 + 1) - noise.x * dis.x * 2) + 1 - noise.x * dis.x * 2);
