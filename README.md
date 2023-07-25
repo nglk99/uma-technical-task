@@ -2,7 +2,10 @@
 
 ### Description
 
-
+This shader uses stochastic sampling which is defined in its first function. 
+Inside the vertex shader, there is a function called `geom`, which creates additional geometry, that later gets distorted. It also calculates the fade distance (an LOD approach that can be used for large terrain meshes) between the camera and the vertex location. In the same location, it defines the custom normal vector and adds it to the existing normal.
+In the fragment shader, the distortion is calculated and applied over time. The multi-texture tiling is assembled and the color and texture are composed. At the end, the distortion gets applied to the color too.
+I've added a `SHADOW_CASTER` pass that is used for enhancing the effects of the shader, but I've disabled it in the default for faster testing.
 
 
 **Textures Used:** https://www.artstation.com/artwork/lv6qG
