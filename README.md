@@ -1,4 +1,4 @@
-# Unity Grass Shader 
+# Unity Stylized Grass Shader 
 
 ### Description
 
@@ -13,8 +13,8 @@ To-Do:
 - [x] Wind
 - [x] Level of Detail Fade
 - [x] Tiling
-- [ ] [Edge Bevel] (https://www.quizcanners.com/single-post/2018/02/08/mobile-friendly-bevel-shader-unity)
-- [ ] [Level of Detail Subshaders] (https://docs.unity3d.com/2018.3/Documentation/Manual/SL-ShaderLOD.html)
+- [ ] [Edge Bevel](https://www.quizcanners.com/single-post/2018/02/08/mobile-friendly-bevel-shader-unity)
+- [ ] [Level of Detail Subshaders](https://docs.unity3d.com/2018.3/Documentation/Manual/SL-ShaderLOD.html)
 
 ### How to Use:
 
@@ -39,4 +39,9 @@ The **Geometry Values** section contains the displacement settings, the minimum 
 Finally, the **Level of Detail** section contains the direction at which the shader effects start to fade.
 
 ![image](https://github.com/nglk99/uma-technical-task/assets/46087451/7dc69d6c-9867-4994-b3c4-448f0add3fff)
+
+Here's what this means in action (displacement exaggerated for demonstration purposes) :
+
+![LOD_Left](https://github.com/nglk99/uma-technical-task/assets/46087451/b864c03a-e6c6-4abd-81ac-e18945efade1)
+
 
