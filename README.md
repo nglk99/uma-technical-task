@@ -16,32 +16,38 @@ To-Do:
 - [ ] [Edge Bevel](https://www.quizcanners.com/single-post/2018/02/08/mobile-friendly-bevel-shader-unity)
 - [ ] [Level of Detail Subshaders](https://docs.unity3d.com/2018.3/Documentation/Manual/SL-ShaderLOD.html)
 
+
 ### How to Use:
 
 This shader's properties are divided in multiple sections for easier access: **Tint Colors**, **Textures**, **Geometry Values**, **Grass Values** and **Level of Detail**.
 
 In the **Tint Colors** section, the user is able to pick their desired tint, the shadow color and the saturation of the grass.
 
-![image](https://github.com/nglk99/uma-technical-task/assets/46087451/da4d57c2-2ee0-44a8-af60-b4374e47fc22)
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/14443d04-2db7-49d9-8623-3640f77151ed)
 
 Under the **Textures** section, it is possible to tweak the main texture of the material, along with the grass pattern, noise and wind distortion textures. Here one can pick the tile of the main texture.
 
-![image](https://github.com/nglk99/uma-technical-task/assets/46087451/dbd32ca6-e538-4ed5-b222-3e94e6600a3c)
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/a82ee446-f5bb-41ad-a076-f4c1b46f5588)
 
 The **Geometry Values** section contains the displacement settings, the minimum and amount of grass displacement, as well as the offset by normal or offset by direction vector.
 
-![image](https://github.com/nglk99/uma-technical-task/assets/46087451/4a589eb2-bfc2-4772-912a-323128fbb3d1)
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/0cb340ba-b996-4864-9b6d-308a4089db1b)
 
 **Grass Values** is the section with additional settings such as wind speed and direction, grass thinness and noise power. This section offers three more tiling methods.
 
-![image](https://github.com/nglk99/uma-technical-task/assets/46087451/a6f96b4e-6efe-4401-9416-2ab5d79e269e)
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/66a96f0f-5673-41ea-9f21-17593c199044)
 
 Finally, the **Level of Detail** section contains the direction at which the shader effects start to fade.
 
-![image](https://github.com/nglk99/uma-technical-task/assets/46087451/7dc69d6c-9867-4994-b3c4-448f0add3fff)
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/2bf5e28c-3db5-4349-9fba-93257a10222e)
+
 
 Here's what this means in action (displacement exaggerated for demonstration purposes) :
 
-![LOD_Left](https://github.com/nglk99/uma-technical-task/assets/46087451/b864c03a-e6c6-4abd-81ac-e18945efade1)
+![LOD_Left](https://github.com/nglk99/uma-technical-task/assets/46087451/c6769994-ea74-43fb-a98f-de6333516715)
 
+
+Issues:
+- [ ] URP issue - shader works in game view, but is rendered transparent in scene view
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/7fd8568e-75d7-423d-8d25-9676616a5028)
 
