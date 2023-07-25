@@ -2,15 +2,19 @@
 
 ### Description
 
-**Textures Used:** https://www.artstation.com/artwork/lv6qG
 
+
+
+**Textures Used:** https://www.artstation.com/artwork/lv6qG
 
 To-Do:
 - [x] Basic Grass
 - [x] Normals
 - [x] Wind
 - [x] Level of Detail Fade
-- [ ] Edge Bevel
+- [x] Tiling
+- [ ] [Edge Bevel] (https://www.quizcanners.com/single-post/2018/02/08/mobile-friendly-bevel-shader-unity)
+- [ ] [Level of Detail Subshaders] (https://docs.unity3d.com/2018.3/Documentation/Manual/SL-ShaderLOD.html)
 
 ### How to Use:
 
