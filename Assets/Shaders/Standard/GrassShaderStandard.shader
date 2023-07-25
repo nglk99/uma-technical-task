@@ -267,6 +267,9 @@ Shader "Custom/GrassShaderStandard"
 					half4 col = _MainTex.Sample(my_linear_repeat_sampler, mainUV + dis.xy * 0.09);
 					
 					//Adding distortion
+					half alpha = step(1 - ((col.x + col.y + col.z + grassPattern.x) * _GrassThinness) * ((2 - i.color.r) * grassPattern.x) * saturate(ripples + 1) * saturate(ripples + 1), ((1 - i.color.r) * (ripples + 1)) * (grassPattern.x) * _GrassThinness - dis.x * 5);
+					alpha = lerp(alpha, alpha + (grassPattern.x * (1 - i.color.r)) * _GrassThinnessIntersection, 1 * (ripples + 0.75));
+
 					if (i.color.r >= 0.02)
 					{
 						if (alpha * (ripples3 + 1) - (i.color.r) < -0.02)discard;
