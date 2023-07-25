@@ -1,5 +1,7 @@
 # Unity Stylized Grass Shader 
 
+![image](https://github.com/nglk99/uma-technical-task/assets/46087451/8953d6ea-2cce-44e8-ba13-5a8701a3a959)
+
 ### Description
 
 This shader uses stochastic sampling which is defined in its first function. 
